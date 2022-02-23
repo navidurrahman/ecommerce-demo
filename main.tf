@@ -97,13 +97,13 @@ resource "huaweicloud_networking_secgroup" "secgroup" {
 }
 
 resource "huaweicloud_rds_instance" "rds_instance" {
-  name                = "mysql_instance"
-  flavor              = var.rds_flavor
+  name              = "mysql_instance"
+  flavor            = var.rds_flavor
+  vpc_id            = huaweicloud_vpc.base_vpc.id
+  subnet_id         = huaweicloud_vpc_subnet.subnet_1.id
+  security_group_id = huaweicloud_networking_secgroup.secgroup.id
+  availability_zone = [data.huaweicloud_availability_zones.myaz.names[0]]
   # ha_replication_mode = "async"
-  vpc_id              = huaweicloud_vpc.base_vpc.id
-  subnet_id           = huaweicloud_vpc_subnet.subnet_1.id
-  security_group_id   = huaweicloud_networking_secgroup.secgroup.id
-  availability_zone   = [data.huaweicloud_availability_zones.myaz.names[0]]
   # availability_zone = [
   #   data.huaweicloud_availability_zones.myaz.names[0],
   #   data.huaweicloud_availability_zones.myaz.names[1]
