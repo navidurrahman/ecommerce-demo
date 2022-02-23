@@ -86,7 +86,39 @@ resource "huaweicloud_cce_node" "cce-node1" {
   }
 }
 
-resource "local_file" "kubeconfig" {
-  content  = huaweicloud_cce_cluster.cluster.kube_config_raw
-  filename = "$Local kubeconfig file path"
+# resource "local_file" "kubeconfig" {
+#   content  = huaweicloud_cce_cluster.cluster.kube_config_raw
+#   filename = "$Local kubeconfig file path"
+# }
+
+resource "huaweicloud_networking_secgroup" "secgroup" {
+  name        = "rds_security_group"
+  description = "security group for RDS"
+}
+
+resource "huaweicloud_rds_instance" "myinstance" {
+  name                = "mysql_instance"
+  flavor              = var.rds_flavor
+  ha_replication_mode = "async"
+  vpc_id              = huaweicloud_vpc.base_vpc.id
+  subnet_id           = huaweicloud_vpc_subnet.subnet_1.id
+  security_group_id   = huaweicloud_networking_secgroup.secgroup.id
+  availability_zone = [
+    data.huaweicloud_availability_zones.myaz.names[0]
+    # data.huaweicloud_availability_zones.myaz.names[1]
+  ]
+
+  db {
+    type     = "MySQL"
+    version  = var.rds_mysql_version
+    password = var.rds_password
+  }
+  volume {
+    type = "CLOUDSSD"
+    size = 40
+  }
+  backup_strategy {
+    start_time = "08:00-09:00"
+    keep_days  = 1
+  }
 }
