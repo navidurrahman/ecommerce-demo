@@ -33,15 +33,19 @@ variable "nat_name" {
 ################
 
 variable "bandwidth_name" {
-  default = "mybandwidth"
+  default = "tbxbandwidth"
 }
 
 variable "key_pair_name" {
-  default = "mykey_pair"
+  default = "node_key"
+}
+
+variable "public_key" {
+  default = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDXLu5uASHVRMlcnuBYOoo6nPwMYhABM4ToB0Com6rjQZE/XGOz2qaj5wFDI+EQjXyGMrNbr2NhxGimRR5fsnkHnaDqSV7/aT9dElYjJiVHWOSpw50GbabrKDbEFkhzcRRyV9qODIoBEh0xKkqMtAH8+lZgmU4HVP1mTe8MPHTJSySVvstJwM88/fxuCjtDCG4wmKmi4LS8SEvgzb3bu42zRCwnhDwR+HOzlg61Qwg2I603kggVFTQDqN0pPTkolWrG4uRYzIJQoC5/m9gAEqRjurBNPBvIhoa4YBTDk1hxIdYlmvMV2SrqqJKQAV1ykmrorZ4uUdyAPBFXpsLai7Hr nrahman@Naveeds-MacBook-Pro.local"
 }
 
 variable "cce_cluster_name" {
-  default = "mycce"
+  default = "tbxcce"
 }
 
 variable "cce_cluster_flavor" {
@@ -49,7 +53,7 @@ variable "cce_cluster_flavor" {
 }
 
 variable "node_name" {
-  default = "mynode"
+  default = "tbxnode"
 }
 
 variable "node_flavor" {
@@ -77,7 +81,7 @@ variable "ecs_flavor" {
 }
 
 variable "ecs_name" {
-  default = "myecs"
+  default = "tbxecs"
 }
 
 variable "os" {
