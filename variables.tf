@@ -27,7 +27,7 @@ variable "secondary_dns" {
 }
 
 variable "nat_name" {
-  default = "NAT Gateway"
+  default = "public-nat"
 }
 
 ################
