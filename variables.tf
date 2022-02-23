@@ -62,6 +62,10 @@ variable "cce_cluster_flavor" {
   default = "cce.s1.small"
 }
 
+variable "cce_cluster_version" {
+  default = "v1.19.10-r0"
+}
+
 variable "node_name" {
   default = "tbx-node"
 }

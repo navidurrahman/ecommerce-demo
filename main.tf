@@ -59,8 +59,8 @@ resource "huaweicloud_compute_keypair" "node-keypair" {
 resource "huaweicloud_cce_cluster" "cluster" {
   name                   = var.cce_cluster_name
   cluster_type           = "VirtualMachine"
-  cluster_version        = "v1.19"
-  flavor_id              = "cce.s1.small"
+  cluster_version        = var.cce_cluster_version
+  flavor_id              = var.cce_cluster_flavor
   vpc_id                 = huaweicloud_vpc.base_vpc.id
   subnet_id              = huaweicloud_vpc_subnet.subnet_1.id
   container_network_type = "overlay_l2"
@@ -96,17 +96,18 @@ resource "huaweicloud_networking_secgroup" "secgroup" {
   description = "security group for RDS"
 }
 
-resource "huaweicloud_rds_instance" "myinstance" {
-  name                = "mysql_instance"
-  flavor              = var.rds_flavor
-  ha_replication_mode = "async"
-  vpc_id              = huaweicloud_vpc.base_vpc.id
-  subnet_id           = huaweicloud_vpc_subnet.subnet_1.id
-  security_group_id   = huaweicloud_networking_secgroup.secgroup.id
-  availability_zone = [
-    data.huaweicloud_availability_zones.myaz.names[0]
-    # data.huaweicloud_availability_zones.myaz.names[1]
-  ]
+resource "huaweicloud_rds_instance" "rds_instance" {
+  name              = "mysql_instance"
+  flavor            = var.rds_flavor
+  vpc_id            = huaweicloud_vpc.base_vpc.id
+  subnet_id         = huaweicloud_vpc_subnet.subnet_1.id
+  security_group_id = huaweicloud_networking_secgroup.secgroup.id
+  availability_zone = [data.huaweicloud_availability_zones.myaz.names[0]]
+  # ha_replication_mode = "async"
+  # availability_zone = [
+  #   data.huaweicloud_availability_zones.myaz.names[0],
+  #   data.huaweicloud_availability_zones.myaz.names[1]
+  # ]
 
   db {
     type     = "MySQL"
