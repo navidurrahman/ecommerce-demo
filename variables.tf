@@ -1,5 +1,5 @@
 variable "vpc_name" {
-  default = "vpc-basic"
+  default = "tbx-vpc"
 }
 
 variable "vpc_cidr" {
@@ -7,7 +7,7 @@ variable "vpc_cidr" {
 }
 
 variable "subnet_name" {
-  default = "subent-basic"
+  default = "tbx-subent"
 }
 
 variable "subnet_cidr" {
@@ -27,17 +27,27 @@ variable "secondary_dns" {
 }
 
 variable "nat_name" {
-  default = "public-nat"
+  default = "tbx-nat"
 }
+
+variable "rds_flavor" {
+  default = "rds.mysql.n1.large.2"
+}
+
+variable "rds_mysql_version" {
+  default = "8.0"
+}
+
+variable "rds_password" {}
 
 ################
 
 variable "bandwidth_name" {
-  default = "tbxbandwidth"
+  default = "tbx-bandwidth"
 }
 
 variable "key_pair_name" {
-  default = "node_key"
+  default = "tbx-key"
 }
 
 variable "public_key" {
@@ -45,7 +55,7 @@ variable "public_key" {
 }
 
 variable "cce_cluster_name" {
-  default = "tbxcce"
+  default = "tbx-cce"
 }
 
 variable "cce_cluster_flavor" {
@@ -53,7 +63,7 @@ variable "cce_cluster_flavor" {
 }
 
 variable "node_name" {
-  default = "tbxnode"
+  default = "tbx-node"
 }
 
 variable "node_flavor" {
@@ -81,7 +91,7 @@ variable "ecs_flavor" {
 }
 
 variable "ecs_name" {
-  default = "tbxecs"
+  default = "tbx-ecs"
 }
 
 variable "os" {
