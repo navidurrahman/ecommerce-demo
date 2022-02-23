@@ -59,8 +59,8 @@ resource "huaweicloud_compute_keypair" "node-keypair" {
 resource "huaweicloud_cce_cluster" "cluster" {
   name                   = var.cce_cluster_name
   cluster_type           = "VirtualMachine"
-  cluster_version        = "v1.19.10-r0"
-  flavor_id              = "cce.s1.small"
+  cluster_version        = var.cce_cluster_version
+  flavor_id              = var.cce_cluster_flavor
   vpc_id                 = huaweicloud_vpc.base_vpc.id
   subnet_id              = huaweicloud_vpc_subnet.subnet_1.id
   container_network_type = "overlay_l2"
