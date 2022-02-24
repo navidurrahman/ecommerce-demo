@@ -94,7 +94,7 @@ variable "ecs_name" {
   default = "tbx-ecs"
 }
 
-variable "os" {
+variable "cce_node_os" {
   default = "CentOS 7.6"
 }
 

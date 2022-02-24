@@ -73,6 +73,7 @@ resource "g42cloud_cce_node" "cce-node1" {
   cluster_id        = g42cloud_cce_cluster.cluster.id
   name              = var.node_name
   flavor_id         = var.node_flavor
+  os                = var.cce_node_os
   availability_zone = data.g42cloud_availability_zones.myaz.names[0]
   key_pair          = var.key_pair_name
 
