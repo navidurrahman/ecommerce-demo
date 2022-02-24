@@ -83,7 +83,7 @@ jobs:
     # Generates an execution plan for Terraform
     - name: Terraform Plan
       id: plan
-      run: terraform plan -var 'rds_password=${{ secrets.RDS_PASSWORD }}'
+      run: terraform plan -no-color -var 'rds_password=${{ secrets.RDS_PASSWORD }}'
 
     - name: Update Pull Request
       uses: actions/github-script@v6
