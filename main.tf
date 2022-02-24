@@ -99,6 +99,17 @@ resource "g42cloud_networking_secgroup" "secgroup" {
   description = "security group for RDS"
 }
 
+# allow MySQL Port
+resource "huaweicloud_networking_secgroup_rule" "allow_https" {
+  direction         = "ingress"
+  ethertype         = "IPv4"
+  protocol          = "tcp"
+  port_range_min    = 3306
+  port_range_max    = 3306
+  remote_ip_prefix  = var.vpc_cidr
+  security_group_id = g42cloud_networking_secgroup.secgroup_1.id
+}
+
 resource "g42cloud_rds_instance" "rds_instance" {
   name              = "mysql_instance"
   flavor            = var.rds_flavor
