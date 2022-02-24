@@ -31,12 +31,17 @@ variable "nat_name" {
 }
 
 variable "rds_flavor" {
-  default = "rds.mysql.n2.large.2"
+  default = "rds.mysql.c6.large.2"
 }
 
 variable "rds_mysql_version" {
   default = "8.0"
 }
+
+variable "rds_port" {
+  default = 3306
+}
+
 
 variable "rds_password" {}
 
@@ -59,7 +64,7 @@ variable "cce_cluster_name" {
 }
 
 variable "cce_cluster_flavor" {
-  default = "cce.s1.small"
+  default = "cce.s2.small"
 }
 
 variable "cce_cluster_version" {
@@ -79,7 +84,7 @@ variable "root_volume_size" {
 }
 
 variable "root_volume_type" {
-  default = "SATA"
+  default = "SAS"
 }
 
 variable "data_volume_size" {
@@ -87,7 +92,7 @@ variable "data_volume_size" {
 }
 
 variable "data_volume_type" {
-  default = "SATA"
+  default = "SAS"
 }
 
 variable "ecs_name" {
