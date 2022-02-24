@@ -31,7 +31,7 @@ variable "nat_name" {
 }
 
 variable "rds_flavor" {
-  default = "rds.mysql.n1.large.2"
+  default = "rds.mysql.n2.large.2"
 }
 
 variable "rds_mysql_version" {
@@ -71,7 +71,7 @@ variable "node_name" {
 }
 
 variable "node_flavor" {
-  default = "t6.large.2"
+  default = "s6.large.2"
 }
 
 variable "root_volume_size" {
@@ -79,7 +79,7 @@ variable "root_volume_size" {
 }
 
 variable "root_volume_type" {
-  default = "SAS"
+  default = "SATA"
 }
 
 variable "data_volume_size" {
@@ -87,11 +87,7 @@ variable "data_volume_size" {
 }
 
 variable "data_volume_type" {
-  default = "SAS"
-}
-
-variable "ecs_flavor" {
-  default = "sn3.large.2"
+  default = "SATA"
 }
 
 variable "ecs_name" {
@@ -99,7 +95,7 @@ variable "ecs_name" {
 }
 
 variable "os" {
-  default = "EulerOS 2.5"
+  default = "CentOS 7.6"
 }
 
 variable "image_name" {

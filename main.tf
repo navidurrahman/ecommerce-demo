@@ -115,7 +115,7 @@ resource "g42cloud_rds_instance" "rds_instance" {
     password = var.rds_password
   }
   volume {
-    type = "CLOUDSSD"
+    type = "ULTRAHIGH"
     size = 40
   }
   backup_strategy {
