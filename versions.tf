@@ -1,8 +1,8 @@
 terraform {
   required_providers {
-    huaweicloud = {
-      source  = "huaweicloud/huaweicloud"
-      version = ">= 1.33.0"
+    g42cloud = {
+      source  = "g42cloud-terraform/g42cloud"
+      version = ">= 1.3.0"
     }
   }
 

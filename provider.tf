@@ -1,1 +1,1 @@
-provider "huaweicloud" {}
+provider "g42cloud" {}
