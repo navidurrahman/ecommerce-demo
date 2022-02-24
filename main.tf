@@ -69,23 +69,23 @@ resource "g42cloud_cce_cluster" "cluster" {
   delete_all             = "true"
 }
 
-# resource "g42cloud_cce_node" "cce-node1" {
-#   cluster_id        = g42cloud_cce_cluster.cluster.id
-#   name              = var.node_name
-#   flavor_id         = var.node_flavor
-#   os                = var.cce_node_os
-#   availability_zone = data.g42cloud_availability_zones.myaz.names[0]
-#   key_pair          = var.key_pair_name
+resource "g42cloud_cce_node" "cce-node1" {
+  cluster_id        = g42cloud_cce_cluster.cluster.id
+  name              = var.node_name
+  flavor_id         = var.node_flavor
+  os                = var.cce_node_os
+  availability_zone = data.g42cloud_availability_zones.myaz.names[0]
+  key_pair          = var.key_pair_name
 
-#   root_volume {
-#     size       = var.root_volume_size
-#     volumetype = var.root_volume_type
-#   }
-#   data_volumes {
-#     size       = var.data_volume_size
-#     volumetype = var.data_volume_type
-#   }
-# }
+  root_volume {
+    size       = var.root_volume_size
+    volumetype = var.root_volume_type
+  }
+  data_volumes {
+    size       = var.data_volume_size
+    volumetype = var.data_volume_type
+  }
+}
 
 # resource "local_file" "kubeconfig" {
 #   content  = g42cloud_cce_cluster.cluster.kube_config_raw
