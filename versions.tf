@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     g42cloud = {
-      source  = "g42cloud-terraform/terraform-provider-g42cloud"
+      source  = "g42cloud-terraform/g42cloud"
       version = ">= 1.3.0"
     }
   }
