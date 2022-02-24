@@ -19,7 +19,7 @@ variable "subnet_gateway" {
 }
 
 variable "primary_dns" {
-  default = "100.125.1.250"
+  default = "100.125.3.250,100.125.2.14"
 }
 
 variable "secondary_dns" {
