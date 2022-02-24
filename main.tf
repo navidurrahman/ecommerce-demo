@@ -7,11 +7,12 @@ resource "g42cloud_vpc" "base_vpc" {
 }
 
 resource "g42cloud_vpc_subnet" "subnet_1" {
-  vpc_id      = g42cloud_vpc.base_vpc.id
-  name        = var.subnet_name
-  cidr        = var.subnet_cidr
-  gateway_ip  = var.subnet_gateway
-  primary_dns = var.primary_dns
+  vpc_id        = g42cloud_vpc.base_vpc.id
+  name          = var.subnet_name
+  cidr          = var.subnet_cidr
+  gateway_ip    = var.subnet_gateway
+  primary_dns   = var.primary_dns
+  secondary_dns = var.secondary_dns
 }
 
 resource "g42cloud_vpc_eip" "cce" {
