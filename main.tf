@@ -94,9 +94,20 @@ resource "g42cloud_cce_node" "cce-node1" {
 #   filename = "$Local kubeconfig file path"
 # }
 
-resource "g42cloud_networking_secgroup" "secgroup" {
+resource "g42cloud_networking_secgroup" "rdssecgroup" {
   name        = "rds_security_group"
   description = "security group for RDS"
+}
+
+# allow MySQL Port
+resource "g42cloud_networking_secgroup_rule" "allow_https" {
+  direction         = "ingress"
+  ethertype         = "IPv4"
+  protocol          = "tcp"
+  port_range_min    = 3306
+  port_range_max    = 3306
+  remote_ip_prefix  = var.vpc_cidr
+  security_group_id = g42cloud_networking_secgroup.rdssecgroup.id
 }
 
 resource "g42cloud_rds_instance" "rds_instance" {
@@ -104,7 +115,7 @@ resource "g42cloud_rds_instance" "rds_instance" {
   flavor            = var.rds_flavor
   vpc_id            = g42cloud_vpc.base_vpc.id
   subnet_id         = g42cloud_vpc_subnet.subnet_1.id
-  security_group_id = g42cloud_networking_secgroup.secgroup.id
+  security_group_id = g42cloud_networking_secgroup.rdssecgroup.id
   availability_zone = [data.g42cloud_availability_zones.myaz.names[0]]
 
   # For High Availibility
