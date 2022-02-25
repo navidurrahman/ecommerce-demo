@@ -85,8 +85,13 @@ variable "cce_cluster_version" {
 }
 
 variable "node_name" {
-  default = "tbx-node"
+  default = "tbx-node-1"
 }
+
+variable "node2_name" {
+  default = "tbx-node-2"
+}
+
 
 variable "node_flavor" {
   default = "s6.large.2"
