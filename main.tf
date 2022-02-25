@@ -144,6 +144,7 @@ resource "g42cloud_rds_instance" "rds_instance" {
 
   # For High Availibility
   # ha_replication_mode = "async"
+
   # availability_zone = [
   #   data.g42cloud_availability_zones.myaz.names[0],
   #   data.g42cloud_availability_zones.myaz.names[1]
