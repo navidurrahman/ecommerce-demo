@@ -1,3 +1,19 @@
+variable "G42_ACCESS_KEY" {
+  default = "ACCESS_KEY"
+}
+
+variable "G42_SECRET_KEY" {
+  default = "SECRET_KEY"
+}
+
+variable "G42_ACCOUNT_NAME" {
+  default = "ACCOUNT_NAME"
+}
+
+variable "rds_password" {
+  default = "fake-password"
+}
+
 variable "vpc_name" {
   default = "tbx-vpc"
 }
@@ -41,9 +57,6 @@ variable "rds_mysql_version" {
 variable "rds_port" {
   default = 3306
 }
-
-
-variable "rds_password" {}
 
 ################
 
