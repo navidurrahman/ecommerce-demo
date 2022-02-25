@@ -1,13 +1,13 @@
-data "g42cloud_availability_zones" "myaz" {}
+data "g42vbcloud_availability_zones" "myaz" {}
 
 # Create a VPC.
-resource "g42cloud_vpc" "base_vpc" {
+resource "g42vbcloud_vpc" "base_vpc" {
   name = var.vpc_name
   cidr = var.vpc_cidr
 }
 
-resource "g42cloud_vpc_subnet" "subnet_1" {
-  vpc_id        = g42cloud_vpc.base_vpc.id
+resource "g42vbcloud_vpc_subnet" "subnet_1" {
+  vpc_id        = g42vbcloud_vpc.base_vpc.id
   name          = var.subnet_name
   cidr          = var.subnet_cidr
   gateway_ip    = var.subnet_gateway
@@ -15,7 +15,7 @@ resource "g42cloud_vpc_subnet" "subnet_1" {
   secondary_dns = var.secondary_dns
 }
 
-resource "g42cloud_vpc_eip" "cce" {
+resource "g42vbcloud_vpc_eip" "cce" {
   publicip {
     type = "5_bgp"
   }
@@ -27,7 +27,7 @@ resource "g42cloud_vpc_eip" "cce" {
   }
 }
 
-resource "g42cloud_vpc_eip" "nat" {
+resource "g42vbcloud_vpc_eip" "nat" {
   publicip {
     type = "5_bgp"
   }
@@ -39,44 +39,44 @@ resource "g42cloud_vpc_eip" "nat" {
   }
 }
 
-resource "g42cloud_nat_gateway" "nat_1" {
+resource "g42vbcloud_nat_gateway" "nat_1" {
   name      = var.nat_name
   spec      = "1"
-  vpc_id    = g42cloud_vpc.base_vpc.id
-  subnet_id = g42cloud_vpc_subnet.subnet_1.id
+  vpc_id    = g42vbcloud_vpc.base_vpc.id
+  subnet_id = g42vbcloud_vpc_subnet.subnet_1.id
 }
 
-resource "g42cloud_nat_snat_rule" "snat_1" {
-  nat_gateway_id = g42cloud_nat_gateway.nat_1.id
-  floating_ip_id = g42cloud_vpc_eip.nat.id
-  subnet_id      = g42cloud_vpc_subnet.subnet_1.id
+resource "g42vbcloud_nat_snat_rule" "snat_1" {
+  nat_gateway_id = g42vbcloud_nat_gateway.nat_1.id
+  floating_ip_id = g42vbcloud_vpc_eip.nat.id
+  subnet_id      = g42vbcloud_vpc_subnet.subnet_1.id
 }
 
-resource "g42cloud_compute_keypair" "node-keypair" {
+resource "g42vbcloud_compute_keypair" "node-keypair" {
   name       = var.key_pair_name
   public_key = var.public_key
 }
 
-resource "g42cloud_cce_cluster" "cluster" {
+resource "g42vbcloud_cce_cluster" "cluster" {
   name                   = var.cce_cluster_name
   cluster_type           = "VirtualMachine"
   cluster_version        = var.cce_cluster_version
   flavor_id              = var.cce_cluster_flavor
-  vpc_id                 = g42cloud_vpc.base_vpc.id
-  subnet_id              = g42cloud_vpc_subnet.subnet_1.id
+  vpc_id                 = g42vbcloud_vpc.base_vpc.id
+  subnet_id              = g42vbcloud_vpc_subnet.subnet_1.id
   container_network_type = "overlay_l2"
   authentication_mode    = "rbac"
-  eip                    = g42cloud_vpc_eip.cce.address
+  eip                    = g42vbcloud_vpc_eip.cce.address
   delete_all             = "true"
 }
 
-resource "g42cloud_cce_node" "cce-node1" {
-  cluster_id        = g42cloud_cce_cluster.cluster.id
+resource "g42vbcloud_cce_node" "cce-node1" {
+  cluster_id        = g42vbcloud_cce_cluster.cluster.id
   name              = var.node_name
   flavor_id         = var.node_flavor
   os                = var.cce_node_os
-  subnet_id         = g42cloud_vpc_subnet.subnet_1.id
-  availability_zone = data.g42cloud_availability_zones.myaz.names[0]
+  subnet_id         = g42vbcloud_vpc_subnet.subnet_1.id
+  availability_zone = data.g42vbcloud_availability_zones.myaz.names[0]
   key_pair          = var.key_pair_name
 
   root_volume {
@@ -90,17 +90,17 @@ resource "g42cloud_cce_node" "cce-node1" {
 }
 
 # resource "local_file" "kubeconfig" {
-#   content  = g42cloud_cce_cluster.cluster.kube_config_raw
+#   content  = g42vbcloud_cce_cluster.cluster.kube_config_raw
 #   filename = "$Local kubeconfig file path"
 # }
 
-resource "g42cloud_cce_node" "cce-node2" {
-  cluster_id        = g42cloud_cce_cluster.cluster.id
+resource "g42vbcloud_cce_node" "cce-node2" {
+  cluster_id        = g42vbcloud_cce_cluster.cluster.id
   name              = var.node2_name
   flavor_id         = var.node_flavor
   os                = var.cce_node_os
-  subnet_id         = g42cloud_vpc_subnet.subnet_1.id
-  availability_zone = data.g42cloud_availability_zones.myaz.names[1]
+  subnet_id         = g42vbcloud_vpc_subnet.subnet_1.id
+  availability_zone = data.g42vbcloud_availability_zones.myaz.names[1]
   key_pair          = var.key_pair_name
 
   root_volume {
@@ -114,40 +114,40 @@ resource "g42cloud_cce_node" "cce-node2" {
 }
 
 # resource "local_file" "kubeconfig" {
-#   content  = g42cloud_cce_cluster.cluster.kube_config_raw
+#   content  = g42vbcloud_cce_cluster.cluster.kube_config_raw
 #   filename = "$Local kubeconfig file path"
 # }
 
-resource "g42cloud_networking_secgroup" "rdssecgroup" {
+resource "g42vbcloud_networking_secgroup" "rdssecgroup" {
   name        = "rds_security_group"
   description = "security group for RDS"
 }
 
 # allow MySQL Port
-resource "g42cloud_networking_secgroup_rule" "allow_https" {
+resource "g42vbcloud_networking_secgroup_rule" "allow_https" {
   direction         = "ingress"
   ethertype         = "IPv4"
   protocol          = "tcp"
   port_range_min    = 3306
   port_range_max    = 3306
   remote_ip_prefix  = var.vpc_cidr
-  security_group_id = g42cloud_networking_secgroup.rdssecgroup.id
+  security_group_id = g42vbcloud_networking_secgroup.rdssecgroup.id
 }
 
-resource "g42cloud_rds_instance" "rds_instance" {
+resource "g42vbcloud_rds_instance" "rds_instance" {
   name              = "mysql_instance"
   flavor            = var.rds_flavor
-  vpc_id            = g42cloud_vpc.base_vpc.id
-  subnet_id         = g42cloud_vpc_subnet.subnet_1.id
-  security_group_id = g42cloud_networking_secgroup.rdssecgroup.id
-  availability_zone = [data.g42cloud_availability_zones.myaz.names[0]]
+  vpc_id            = g42vbcloud_vpc.base_vpc.id
+  subnet_id         = g42vbcloud_vpc_subnet.subnet_1.id
+  security_group_id = g42vbcloud_networking_secgroup.rdssecgroup.id
+  availability_zone = [data.g42vbcloud_availability_zones.myaz.names[0]]
 
   # For High Availibility
   # ha_replication_mode = "async"
 
   # availability_zone = [
-  #   data.g42cloud_availability_zones.myaz.names[0],
-  #   data.g42cloud_availability_zones.myaz.names[1]
+  #   data.g42vbcloud_availability_zones.myaz.names[0],
+  #   data.g42vbcloud_availability_zones.myaz.names[1]
   # ]
 
   db {

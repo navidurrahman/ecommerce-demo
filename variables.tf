@@ -10,6 +10,18 @@ variable "G42_ACCOUNT_NAME" {
   default = "ACCOUNT_NAME"
 }
 
+variable "G42VB_ACCESS_KEY" {
+  default = "ACCESS_KEY"
+}
+
+variable "G42VB_SECRET_KEY" {
+  default = "SECRET_KEY"
+}
+
+variable "G42VB_ACCOUNT_NAME" {
+  default = "ACCOUNT_NAME"
+}
+
 variable "rds_password" {
   default = "fake-password"
 }

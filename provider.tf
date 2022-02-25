@@ -1,1 +1,1 @@
-provider "g42cloud" {}
+provider "g42vbcloud" {}
