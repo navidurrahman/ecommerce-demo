@@ -162,6 +162,6 @@ resource "g42cloud_rds_instance" "rds_instance" {
   }
   backup_strategy {
     start_time = "08:00-09:00"
-    keep_days  = 1
+    keep_days  = 3
   }
 }
