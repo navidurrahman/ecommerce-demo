@@ -1,6 +1,6 @@
 data "g42cloud_availability_zones" "myaz" {}
 
-# Create a VPC.
+# Create a VPC
 resource "g42cloud_vpc" "base_vpc" {
   name = var.vpc_name
   cidr = var.vpc_cidr
