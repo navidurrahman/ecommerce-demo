@@ -94,7 +94,7 @@ variable "node2_name" {
 
 
 variable "node_flavor" {
-  default = "s6.large.2"
+  default = "s6.xlarge.4"
 }
 
 variable "root_volume_size" {
