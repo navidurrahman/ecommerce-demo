@@ -92,6 +92,9 @@ variable "node2_name" {
   default = "tbx-node-2"
 }
 
+variable "node3_name" {
+  default = "tbx-node-3"
+}
 
 variable "node_flavor" {
   default = "s6.xlarge.4"
