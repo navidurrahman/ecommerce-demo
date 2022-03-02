@@ -57,6 +57,62 @@ resource "g42cloud_compute_keypair" "node-keypair" {
   public_key = var.public_key
 }
 
+resource "g42cloud_networking_secgroup" "sfssecgroup" {
+  name        = "sfs_security_group"
+  description = "security group for SFS"
+}
+
+resource "g42cloud_networking_secgroup_rule" "sfs_allow_111" {
+  direction         = "ingress"
+  ethertype         = "IPv4"
+  protocol          = "tcp"
+  port_range_min    = 111
+  port_range_max    = 111
+  remote_ip_prefix  = var.vpc_cidr
+  security_group_id = g42cloud_networking_secgroup.rdssecgroup.id
+}
+
+resource "g42cloud_networking_secgroup_rule" "sfs_allow_445" {
+  direction         = "ingress"
+  ethertype         = "IPv4"
+  protocol          = "tcp"
+  port_range_min    = 445
+  port_range_max    = 445
+  remote_ip_prefix  = var.vpc_cidr
+  security_group_id = g42cloud_networking_secgroup.rdssecgroup.id
+}
+
+
+resource "g42cloud_networking_secgroup_rule" "sfs_allow_2049" {
+  direction         = "ingress"
+  ethertype         = "IPv4"
+  protocol          = "tcp"
+  port_range_min    = 2049
+  port_range_max    = 2052
+  remote_ip_prefix  = var.vpc_cidr
+  security_group_id = g42cloud_networking_secgroup.rdssecgroup.id
+}
+
+resource "g42cloud_networking_secgroup_rule" "sfs_allow_20048" {
+  direction         = "ingress"
+  ethertype         = "IPv4"
+  protocol          = "tcp"
+  port_range_min    = 20048
+  port_range_max    = 20048
+  remote_ip_prefix  = var.vpc_cidr
+  security_group_id = g42cloud_networking_secgroup.rdssecgroup.id
+}
+
+resource "g42cloud_sfs_turbo" "sfs-turbo-1" {
+  name              = "sfs-turbo-1"
+  size              = 500
+  share_proto       = "NFS"
+  vpc_id            = g42cloud_vpc.base_vpc.id
+  subnet_id         = g42cloud_vpc_subnet.subnet_1.id
+  security_group_id = g42cloud_networking_secgroup.rdssecgroup.id
+  availability_zone = data.g42cloud_availability_zones.myaz.names[0]
+}
+
 resource "g42cloud_cce_cluster" "cluster" {
   name                   = var.cce_cluster_name
   cluster_type           = "VirtualMachine"
@@ -124,7 +180,7 @@ resource "g42cloud_networking_secgroup" "rdssecgroup" {
 }
 
 # allow MySQL Port
-resource "g42cloud_networking_secgroup_rule" "allow_https" {
+resource "g42cloud_networking_secgroup_rule" "rds_allow_mysql" {
   direction         = "ingress"
   ethertype         = "IPv4"
   protocol          = "tcp"
