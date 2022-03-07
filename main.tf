@@ -7,7 +7,7 @@ module "vpc" {
 #   subnet_id               = module.vpc.subnetid
 #   vpc_id                  = module.vpc.vpcid
 #   vpc_cidr                = module.vpc.vpc_cidr
-# }
+## }
 
 # module "cce" {
 #   depends_on              = [module.vpc]
