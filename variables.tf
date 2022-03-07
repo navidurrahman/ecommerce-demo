@@ -9,3 +9,7 @@ variable "G42_SECRET_KEY" {
 variable "G42_ACCOUNT_NAME" {
   default = "ACCOUNT_NAME"
 }
+
+variable "rds_password" {
+  default = "fake-password"
+}
