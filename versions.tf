@@ -10,7 +10,7 @@ terraform {
     organization = "TecBrix"
 
     workspaces {
-      name = "ecommerce-test"
+      name = "ecommerce-dev"
     }
   }
 }

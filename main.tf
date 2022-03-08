@@ -1,5 +1,5 @@
 module "vpc" {
-  source   = "github.com/tecbrix/terraform-g42-vpc"
+  source = "github.com/tecbrix/terraform-g42-vpc"
 }
 # module "rds" {
 #   depends_on              = [module.vpc]
