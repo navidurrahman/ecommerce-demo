@@ -7,7 +7,7 @@ module "rds" {
   source     = "github.com/tecbrix/terraform-g42-rds"
   subnet_id  = module.vpc.subnetid
   vpc_id     = module.vpc.vpcid
-  vpc_cidr   = module.vpc.vpc_cidr
+  vpc_cidr   = "172.16.0.0/16"
 }
 # module "cce" {
 #   depends_on              = [module.vpc]
