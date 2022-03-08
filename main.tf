@@ -10,7 +10,7 @@ module "rds" {
 }
 module "cce" {
   depends_on = [module.vpc]
-  source     = "../terraform-g42-cce"
+  source     = "github.com/tecbrix/terraform-g42-cce"
   subnet_id  = module.vpc.subnetid
   vpc_id     = module.vpc.vpcid
 }
