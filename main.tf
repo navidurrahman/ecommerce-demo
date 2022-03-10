@@ -76,14 +76,17 @@ resource "g42cloud_sfs_turbo" "sfs-turbo-1" {
   availability_zone = data.g42cloud_availability_zones.myaz.names[0]
 }
 
-resource "local_file" "kubeconfig" {
-  depends_on = [module.cce]
-  content    = module.cce.kube_config_raw
-  filename   = "kubeconfig.json"
+provider "helm" {
+  kubernetes {
+    host                   = module.cce.certificate_clusters.1.server
+    client_certificate     = base64decode(module.cce.certificate_users.0.client_certificate_data)
+    client_key             = base64decode(module.cce.certificate_users.0.client_key_data)
+    cluster_ca_certificate = base64decode(module.cce.certificate_clusters.1.certificate_authority_data)
+  }
 }
 
 resource "helm_release" "guestbook" {
-  depends_on       = [module.cce, resource.local_file.kubeconfig]
+  depends_on       = [module.cce]
   name             = "guestbook"
   repository       = "https://tecbrix.github.io/helm-charts"
   chart            = "huaweicloud-guestbook"
