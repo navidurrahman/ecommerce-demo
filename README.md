@@ -1,3 +1,2 @@
 # ecommerce-demo
-test change
-
+Demo Application on Huawei Cloud
