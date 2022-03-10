@@ -13,3 +13,7 @@ variable "G42_ACCOUNT_NAME" {
 variable "rds_password" {
   default = "fake-password"
 }
+
+variable "namespace" {
+  default = "default"
+}
