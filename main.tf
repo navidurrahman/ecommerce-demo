@@ -83,7 +83,7 @@ resource "local_file" "kubeconfig" {
 
 resource "helm_release" "guestbook" {
   name             = "guestbook"
-  repository       = "https://tecbrix.github.io/helm-charts/"
+  repository       = "https://tecbrix.github.io/helm-charts"
   chart            = "huaweicloud-guestbook"
   namespace        = var.namespace
   timeout          = "300"
