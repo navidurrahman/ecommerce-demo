@@ -77,11 +77,13 @@ resource "g42cloud_sfs_turbo" "sfs-turbo-1" {
 }
 
 resource "local_file" "kubeconfig" {
-  content  = module.cce.kube_config_raw
-  filename = "kubeconfig.json"
+  depends_on = [module.cce]
+  content    = module.cce.kube_config_raw
+  filename   = "kubeconfig.json"
 }
 
 resource "helm_release" "guestbook" {
+  depends_on       = [module.cce, resource.local_file.kubeconfig]
   name             = "guestbook"
   repository       = "https://tecbrix.github.io/helm-charts"
   chart            = "huaweicloud-guestbook"
