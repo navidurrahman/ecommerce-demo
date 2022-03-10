@@ -75,3 +75,22 @@ resource "g42cloud_sfs_turbo" "sfs-turbo-1" {
   security_group_id = g42cloud_networking_secgroup.sfssecgroup.id
   availability_zone = data.g42cloud_availability_zones.myaz.names[0]
 }
+
+resource "local_file" "kubeconfig" {
+  content  = module.cce.kube_config_raw
+  filename = "kubeconfig.json"
+}
+
+resource "helm_release" "guestbook" {
+  name = "guestbook"
+  # repository = "https://charts.tecbrix.com/guestbook"
+  chart            = "./charts/guestbook"
+  namespace        = var.namespace
+  timeout          = "300"
+  create_namespace = true
+
+  set {
+    name  = "service.subnetID"
+    value = module.vpc.subnetid
+  }
+}
