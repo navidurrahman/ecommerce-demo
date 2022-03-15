@@ -87,9 +87,9 @@ provider "helm" {
 
 resource "helm_release" "guestbook" {
   depends_on       = [module.cce]
-  name             = "guestbook"
+  name             = "ecommdemo"
   repository       = "https://tecbrix.github.io/helm-charts"
-  chart            = "huaweicloud-guestbook"
+  chart            = "huaweicloud-ecommdemo"
   namespace        = var.namespace
   timeout          = "300"
   create_namespace = true
