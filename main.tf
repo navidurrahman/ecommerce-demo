@@ -85,7 +85,7 @@ provider "helm" {
   }
 }
 
-resource "helm_release" "guestbook" {
+resource "helm_release" "ecommdemo" {
   depends_on       = [module.cce]
   name             = "ecommdemo"
   repository       = "https://tecbrix.github.io/helm-charts"
