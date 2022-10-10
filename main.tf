@@ -10,6 +10,7 @@ module "rds" {
   subnet_id  = module.vpc.subnetid
   vpc_id     = module.vpc.vpcid
   vpc_cidr   = module.vpc.vpc_cidr
+  rds_flavor = "rds.mysql.m6.large.8"
 }
 
 module "cce" {
