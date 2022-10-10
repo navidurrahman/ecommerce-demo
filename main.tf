@@ -17,7 +17,7 @@ module "cce" {
   source      = "github.com/tecbrix/terraform-g42-cce"
   subnet_id   = module.vpc.subnetid
   vpc_id      = module.vpc.vpcid
-  node_flavor = "c6nl.large.4"
+  node_flavor = "c6s.large.4"
 }
 
 resource "g42cloud_networking_secgroup" "sfssecgroup" {
