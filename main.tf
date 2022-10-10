@@ -83,6 +83,7 @@ provider "helm" {
     client_certificate     = base64decode(module.cce.certificate_users.0.client_certificate_data)
     client_key             = base64decode(module.cce.certificate_users.0.client_key_data)
     cluster_ca_certificate = base64decode(module.cce.certificate_clusters.1.certificate_authority_data)
+    insecure               = true
   }
 }
 
