@@ -1,3 +1,3 @@
 # ecommerce-demo
-Demo Application on Huawei Cloud
+Demo Application on G42 Cloud
 Demo Test.
